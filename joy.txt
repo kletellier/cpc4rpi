@@ -1,0 +1,5 @@
+http://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinput.html
+
+Search for SDL_JOYBUTTONDOWN http://pastebin.com/xSRvTV7R
+http://wiki.gp2x.org/articles/s/d/l/SDL_Joystick_mapping.html
+http://www.cpc-power.com/cpcarchives/index.php?page=articles&num=201
