@@ -3391,9 +3391,7 @@ int input_init (void)
       }
    }
 
-   if (CPC.joysticks) { // enable keyboard joystick emulation?
-      input_swap_joy();
-   }
+   
 
    return 0;
 }
@@ -4137,7 +4135,7 @@ CPC.auto_pause = 1;
 CPC.printer = 0;
 CPC.mf2 = 0;
 CPC.joysticks = 1;
-
+CPC.keyboard=1;
 CPC.scr_fs_width = 640;
 CPC.scr_fs_height = 480;
 CPC.scr_fs_bpp = 16;

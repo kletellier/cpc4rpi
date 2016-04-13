@@ -240,7 +240,8 @@ typedef struct {
    } snd_cycle_count_init;
 
    unsigned int kbd_layout;
-
+   unsigned int keyboard;
+   
    unsigned int max_tracksize;
    char snap_path[_MAX_PATH + 1];
    char snap_file[_MAX_PATH + 1];
