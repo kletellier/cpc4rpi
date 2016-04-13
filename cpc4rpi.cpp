@@ -286,7 +286,9 @@ int axis_d=0;
 int axis_l=0;
 int axis_r=0;
 
-
+#define MOD_PC_SHIFT    (KMOD_SHIFT << 16)
+#define MOD_PC_CTRL     (KMOD_CTRL << 16)
+#define MOD_PC_MODE     (KMOD_MODE << 16)
 
 
 #define MAX_FREQ_ENTRIES 5
@@ -940,9 +942,7 @@ static dword cpc_kbd[3][149] = {
    }
 };
 
-#define MOD_PC_SHIFT    (KMOD_SHIFT << 16)
-#define MOD_PC_CTRL     (KMOD_CTRL << 16)
-#define MOD_PC_MODE     (KMOD_MODE << 16)
+
 
 #define KBD_MAX_ENTRIES 160
 static int kbd_layout[4][KBD_MAX_ENTRIES][2] = {
