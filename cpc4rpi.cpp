@@ -291,6 +291,10 @@ int axis_r=0;
 #define MOD_EMU_KEY     (0x10 << 8)
 
 
+#define MOD_PC_SHIFT    (KMOD_SHIFT << 16)
+#define MOD_PC_CTRL     (KMOD_CTRL << 16)
+#define MOD_PC_MODE     (KMOD_MODE << 16)
+
 #define MAX_FREQ_ENTRIES 5
 dword freq_table[MAX_FREQ_ENTRIES] = {
    11025,
