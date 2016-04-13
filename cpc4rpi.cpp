@@ -3349,6 +3349,54 @@ void emulator_reset (bool bolMF2Reset)
 }
 
 
+int input_init (void)
+{
+   dword n, pc_key, pc_idx, cpc_idx, cpc_key;
+
+   memset(keyboard_normal, 0xff, sizeof(keyboard_normal));
+   memset(keyboard_shift, 0xff, sizeof(keyboard_shift));
+   memset(keyboard_ctrl, 0xff, sizeof(keyboard_ctrl));
+   memset(keyboard_mode, 0xff, sizeof(keyboard_mode));
+
+   for (n = 0; n < KBD_MAX_ENTRIES; n++) {
+      pc_key = kbd_layout[CPC.kbd_layout][n][1]; // PC key assigned to CPC key
+      if (pc_key) {
+         pc_idx = pc_key & 0xffff; // strip off modifier
+         cpc_idx = kbd_layout[CPC.kbd_layout][n][0];
+         if (cpc_idx & MOD_EMU_KEY) {
+            cpc_key = cpc_idx;
+         } else {
+            cpc_key = cpc_kbd[CPC.keyboard][cpc_idx];
+         }
+         if (pc_key & MOD_PC_SHIFT) { // key + SHIFT?
+            keyboard_shift[pc_idx] = cpc_key; // copy CPC key matrix value to SHIFT table
+         } else if (pc_key & MOD_PC_CTRL) { // key + CTRL?
+            keyboard_ctrl[pc_idx] = cpc_key; // copy CPC key matrix value to CTRL table
+         } else if (pc_key & MOD_PC_MODE) { // key + AltGr?
+            keyboard_mode[pc_idx] = cpc_key; // copy CPC key matrix value to AltGr table
+         } else {
+            keyboard_normal[pc_idx] = cpc_key; // copy CPC key matrix value to normal table
+            if (!(cpc_key & MOD_EMU_KEY)) { // not an emulator function key?
+               if (keyboard_shift[pc_idx] == 0xffffffff) { // SHIFT table entry has no value yet?
+                  keyboard_shift[pc_idx] = cpc_key; // duplicate entry in SHIFT table
+               }
+               if (keyboard_ctrl[pc_idx] == 0xffffffff) { // CTRL table entry has no value yet?
+                  keyboard_ctrl[pc_idx] = cpc_key | MOD_CPC_CTRL; // duplicate entry in CTRL table
+               }
+               if (keyboard_mode[pc_idx] == 0xffffffff) { // AltGr table entry has no value yet?
+                  keyboard_mode[pc_idx] = cpc_key; // duplicate entry in AltGr table
+               }
+            }
+         }
+      }
+   }
+
+   if (CPC.joysticks) { // enable keyboard joystick emulation?
+      input_swap_joy();
+   }
+
+   return 0;
+}
 
 int emulator_init (void)
 {
@@ -4204,6 +4252,11 @@ int main (int argc, char **argv)
    video_init_tables(); // generate the byte-to-pixels translation tables
 
 // init input
+   
+   if (input_init()) {
+      fprintf(stderr, "input_init() failed. Aborting.\n");
+      exit(-1);
+   }
 
    if (video_init()) {
       fprintf(stderr, "video_init() failed. Aborting.\n");
