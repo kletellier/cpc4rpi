@@ -3246,7 +3246,7 @@ int emulator_patch_ROM (void)
             break;
       }
       if (pbPtr != pbROMlo) {
-         memcpy(pbPtr, kbd_layout[CPC.kbd_layout-1], 240); // patch the CPC OS ROM with the chosen keyboard layout
+         memcpy(pbPtr, cpc_keytrans[CPC.kbd_layout-1], 240); // patch the CPC OS ROM with the chosen keyboard layout
          pbPtr = pbROMlo + 0x3800;
          memcpy(pbPtr, cpc_charset[CPC.kbd_layout-1], 2048); // add the corresponding character set
       }
