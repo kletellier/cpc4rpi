@@ -286,9 +286,9 @@ int axis_d=0;
 int axis_l=0;
 int axis_r=0;
 
-#define MOD_PC_SHIFT    (KMOD_SHIFT << 16)
-#define MOD_PC_CTRL     (KMOD_CTRL << 16)
-#define MOD_PC_MODE     (KMOD_MODE << 16)
+#define MOD_CPC_SHIFT   (0x01 << 8)
+#define MOD_CPC_CTRL    (0x02 << 8)
+#define MOD_EMU_KEY     (0x10 << 8)
 
 
 #define MAX_FREQ_ENTRIES 5
